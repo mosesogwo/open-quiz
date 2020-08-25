@@ -8,4 +8,5 @@ class User < ApplicationRecord
             if: -> { new_record? || !password.nil? }
   validates :gender, presence: true
   validates :role, presence: true
+  has_many :quizzes
 end
