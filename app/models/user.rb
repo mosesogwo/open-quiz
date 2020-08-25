@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
-  validates :gender, presence: true
-  validates :role, presence: true
+  validates :gender, presence: true, inclusion: { in: %w(male female) }
+  validates :role, presence: true, inclusion: { in: %w(teacher student) }
   has_many :quizzes
 end
