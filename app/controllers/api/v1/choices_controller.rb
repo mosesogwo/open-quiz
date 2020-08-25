@@ -1,4 +1,4 @@
-class ChoicesController < ApplicationController
+class Api::V1::ChoicesController < ApplicationController
   before_action :set_choice, only: [:show, :update, :destroy]
 
   # GET /choices
@@ -8,9 +8,9 @@ class ChoicesController < ApplicationController
   end
 
   # GET /choices/1
-  def show
-      render json: @choice
-  end
+  # def show
+  #   render json: @choice
+  # end
 
   # POST /choices
   def create
