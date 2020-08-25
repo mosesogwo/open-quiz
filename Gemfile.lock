@@ -88,8 +88,6 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.10.0)
-      activesupport (>= 5.0.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
     jsonapi-renderer (0.2.2)
@@ -221,7 +219,6 @@ DEPENDENCIES
   bullet
   byebug
   factory_bot_rails
-  jbuilder (~> 2.7)
   jwt
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
