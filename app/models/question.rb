@@ -3,5 +3,5 @@ class Question < ApplicationRecord
   has_many :choices
 
   validates :question, :is_active, presence: true
-  validates :question, length { minimum: 10, mazimum: 5000 }
+  validates :question, length: { minimum: 10, mazimum: 5000 }
 end

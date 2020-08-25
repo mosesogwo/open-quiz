@@ -1,5 +1,7 @@
 class Api::V1::ChoicesController < ApplicationController
   before_action :set_choice, only: [:show, :update, :destroy]
+  before_action :authorize_request, only: [:create, :update, :destroy]
+  before_action :verify_teacher_signed_in, only: [:create, :update, :destroy]
 
   # GET /choices
   def index
@@ -17,7 +19,7 @@ class Api::V1::ChoicesController < ApplicationController
     @choice = Choice.new(choice_params)
 
     if @choice.save
-      render :show, status: :created
+      render json: @choice, status: :created
     else
       render json: @choice.errors, status: :unprocessable_entity
     end
@@ -26,7 +28,7 @@ class Api::V1::ChoicesController < ApplicationController
   # PATCH/PUT /choices/1
   def update
     if @choice.update(choice_params)
-      render :show, status: :ok
+      render json: @choice, status: :ok
     else
       render json: @choice.errors, status: :unprocessable_entity
     end
@@ -47,6 +49,6 @@ class Api::V1::ChoicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def choice_params
-      params.require(:choice).permit(:question_id, :choice, :is_right_choice, :note)
+      params.permit(:question_id, :choice, :is_right_choice, :note)
     end
 end

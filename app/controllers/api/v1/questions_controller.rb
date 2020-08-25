@@ -1,5 +1,6 @@
 class Api::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
+  before_action :verify_teacher_signed_in, only: [:create, :update, :destroy]
 
   # GET /questions
   def index
@@ -14,21 +15,23 @@ class Api::V1::QuestionsController < ApplicationController
 
   # POST /questions
   def create
+    byebug
     @question = Question.new(question_params)
+    
 
     if @question.save
-      render :show, status: :created
+      render json: @question, status: :created
     else
-      render json: @question.errors, status: :unprocessable_entity
+      render json: @question.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /questions/1
   def update
     if @question.update(question_params)
-      render :show, status: :ok
+      render json: @question, status: :ok
     else
-      render json: @question.errors, status: :unprocessable_entity
+      render json: @question.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -47,6 +50,6 @@ class Api::V1::QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:is_active, :quiz_id)
+      params.permit(:is_active, :quiz_id, :question)
     end
 end

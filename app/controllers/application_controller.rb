@@ -14,6 +14,10 @@ class ApplicationController < ActionController::API
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end
+  end
 
+  def verify_teacher_signed_in
+    @user = User.find_by(id: params[:user_id])
+    render json: { error: "Unauthorized" } if @user.role != 'teacher'
   end
 end

@@ -1,5 +1,6 @@
 class Api::V1::QuizzesController < ApplicationController
   before_action :set_quiz, only: [:show, :update, :destroy]
+  before_action :verify_teacher_signed_in, only: [:create, :update, :destroy]
 
   # GET /quizzes
   def index
@@ -17,7 +18,7 @@ class Api::V1::QuizzesController < ApplicationController
     @quiz = Quiz.new(quiz_params)
 
     if @quiz.save
-      render :show, status: :created
+      render json: @quiz, status: :created
     else
       render json: @quiz.errors, status: :unprocessable_entity
     end
@@ -26,7 +27,7 @@ class Api::V1::QuizzesController < ApplicationController
   # PATCH/PUT /quizzes/1
   def update
     if @quiz.update(quiz_params)
-      render :show, status: :ok
+      render json: @quiz, status: :ok
     else
       render json: @quiz.errors, status: :unprocessable_entity
     end
